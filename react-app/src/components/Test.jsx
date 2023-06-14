@@ -3,26 +3,18 @@ import { validInput } from './input';
 import { generate } from 'random-words';
 import './test.css';
 
-const NUM_WORDS = 200;
-const SECONDS = 60;
-
-const words = generate(25);
-
 const Test = () => {
-  const [timer, setTimer] = useState(SECONDS);
+  const [words, setWords] = useState(generate(25));
   const [isFocused, setIsFocused] = useState(false);
   const [currentInput, setCurrentInput] = useState('');
   const [input, setInput] = useState([]);
   const [prevCorrect, setPrevCorrect] = useState(true);
 
-  // Start timer
-  function start() {
-    let interval = setInterval(() => {
-      setTimer((prev) => {
-        if (!prev) clearInterval(interval);
-        else return prev - 1;
-      });
-    }, 1000);
+  function init(numWords) {
+    setWords(generate(numWords));
+    setCurrentInput('');
+    setInput([]);
+    setPrevCorrect(true);
   }
 
   function handleFocus() {
@@ -143,8 +135,28 @@ const Test = () => {
 
   return (
     <div className='flex flex-col items-start w-2/3'>
-      <h1>{timer}</h1>
-      <button onClick={start}>Start</button>
+      {/* <h1>{timer}</h1>
+      <button onClick={start}>Start</button> */}
+      <div className='flex justify-center items-center text-xl text-black font-semibold mx-auto py-4'>
+        <button
+          className='mx-2 bg-neutral-100 py-2 px-5 rounded-lg'
+          onClick={() => init(25)}
+        >
+          25
+        </button>
+        <button
+          className='mx-2 bg-neutral-100 py-2 px-5 rounded-lg'
+          onClick={() => init(50)}
+        >
+          50
+        </button>
+        <button
+          className='mx-2 bg-neutral-100 py-2 px-5 rounded-lg'
+          onClick={() => init(100)}
+        >
+          100
+        </button>
+      </div>
       <div className='bg-neutral-900 p-6 text-2xl flex flex-wrap outline-none relative'>
         <div
           className='absolute inset-1 z-10 flex justify-center items-center outline-none backdrop-blur-md focus:backdrop-blur-none transition ease-in-out duration-300 overflow-hidden'
