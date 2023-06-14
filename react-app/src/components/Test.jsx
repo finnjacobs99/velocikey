@@ -112,7 +112,7 @@ const Test = () => {
           return (
             <span
               key={lIdx}
-              className={`${color} transition-colors ease-in-out duration-300 relative`}
+              className={`${color} transition-colors ease-in-out duration-200 relative`}
             >
               {renderCaret(word, wIdx, lIdx)}
               {letter}
@@ -132,14 +132,11 @@ const Test = () => {
       (lIdx === currentInput.length ||
         (lIdx === word.length - 1 && currentInput.length >= word.length))
     ) {
-      const leftBound = currentInput.length < word.length ? '' : '-';
-      return (
-        <span
-          className={`caret absolute top-[-.1rem] right-[${leftBound}.42rem]`}
-        >
-          |
-        </span>
-      );
+      const pos =
+        currentInput.length < word.length
+          ? 'right-[.42rem]'
+          : 'right-[-.42rem]';
+      return <span className={`caret absolute top-[-.1rem] ${pos}`}>|</span>;
     }
     return;
   }
@@ -156,8 +153,12 @@ const Test = () => {
           onFocus={handleFocus}
           onBlur={handleFocus}
         >
-          <span className={`${isFocused && 'opacity-0'} text-neutral-300`}>
-            Click to start
+          <span
+            className={`${
+              isFocused && 'opacity-0'
+            } transition-opacity ease-in-out duration-300 text-white`}
+          >
+            Click to start typing!
           </span>
         </div>
         {words.map(renderWords)}
