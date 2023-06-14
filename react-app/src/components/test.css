@@ -1,6 +1,6 @@
 .caret {
   color: white;
-  animation: blink-caret 1s infinite;
+  animation: blink-caret 1.5s infinite;
 }
 
 @keyframes blink-caret {
