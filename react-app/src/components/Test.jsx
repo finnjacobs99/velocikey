@@ -4,19 +4,19 @@ import { generate } from 'random-words';
 import './test.css';
 
 const Test = () => {
-  const [numWords, setNumWords] = useState(25);
-  const [words, setWords] = useState(generate(numWords));
-  const [isFocused, setIsFocused] = useState(false);
-  const [timer, setTimer] = useState(0);
-  const [currentInput, setCurrentInput] = useState('');
-  const [input, setInput] = useState([]);
-  const [prevCorrect, setPrevCorrect] = useState(true);
-  const [correct, setCorrect] = useState([]);
-  const [wpm, setWpm] = useState(0);
-  const [numTyped, setNumTyped] = useState(0);
-  const [numTypedCorrect, setNumTypedCorrect] = useState(0);
-  const [accuracy, setAccuracy] = useState(100);
-  const [hasEnded, setHasEnded] = useState(true);
+  const [numWords, setNumWords] = useState(25); // Test length
+  const [words, setWords] = useState(generate(numWords)); // Words for user to type
+  const [isFocused, setIsFocused] = useState(false); // Whether input is focused
+  const [hasEnded, setHasEnded] = useState(true); // Whether test has ended
+  const [timer, setTimer] = useState(0); // Timer
+  const [currentInput, setCurrentInput] = useState(''); // Current word user is typing
+  const [input, setInput] = useState([]); // Previously typed words
+  const [prevCorrect, setPrevCorrect] = useState(true); // Whether previous word was typed correctly
+  const [correct, setCorrect] = useState([]); // Words user has typed correctly
+  const [wpm, setWpm] = useState(0); // Words per minute
+  const [numTyped, setNumTyped] = useState(0); // Number of times user has typed a letter
+  const [numTypedCorrect, setNumTypedCorrect] = useState(0); // Number of times user has typed a letter correctly
+  const [accuracy, setAccuracy] = useState(100); // Accuracy
 
   // Initialize test
   function init(_numWords) {
@@ -69,7 +69,7 @@ const Test = () => {
     return () => clearInterval(interval);
   }, [hasEnded]);
 
-  // Store correctly tpyed words
+  // Store correctly typed words
   function updateCorrect() {
     setCorrect(() => {
       return input.filter((word, index) => word === words[index]);
@@ -135,7 +135,7 @@ const Test = () => {
     // Handle backspaces
     else if (e.key === 'Backspace') {
       if (currentInput.length) setCurrentInput((prev) => prev.slice(0, -1));
-      else if (input.length && !prevCorrect) {
+      else if (input.length && !prevCorrect && !hasEnded) {
         setCurrentInput(input.pop());
         setPrevCorrect(true);
       }
@@ -158,7 +158,7 @@ const Test = () => {
           let color = 'text-neutral-500';
           let rest;
 
-          // set text colors previous words
+          // style previous words
           if (wIdx < input.length) {
             // correct/incorrect
             if (input[wIdx][lIdx] === letter) color = 'text-white';
@@ -177,7 +177,7 @@ const Test = () => {
             }
           }
 
-          // set text colors for current word
+          // style current word
           else if (wIdx === input.length) {
             // correct/incorrect
             if (lIdx < currentInput.length) {
