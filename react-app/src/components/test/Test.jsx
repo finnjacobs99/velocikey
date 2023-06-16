@@ -117,19 +117,20 @@ const Test = () => {
 
   // Handle user input
   function handleKeyDown(e) {
-    if (!validInput.includes(e.key)) return;
+    const key = e.key.toLowerCase();
+    if (!validInput.includes(key)) return;
 
     // Start condition
     if (
       !input.length &&
       !currentInput.length &&
-      e.key !== 'Backspace' &&
-      e.key !== ' '
+      key !== 'backspace' &&
+      key !== ' '
     )
       start();
 
     // Move onto next word
-    if (e.key === ' ') {
+    if (key === ' ') {
       setIsBackspace(false);
       if (currentInput.length && input.length < words.length) {
         setInput((prev) => {
@@ -144,7 +145,7 @@ const Test = () => {
     }
 
     // Handle backspaces
-    else if (e.key === 'Backspace') {
+    else if (key === 'backspace') {
       setIsBackspace(true);
       if (currentInput.length) setCurrentInput((prev) => prev.slice(0, -1));
       else if (input.length && !prevCorrect && !hasEnded) {
@@ -156,7 +157,7 @@ const Test = () => {
     // Update input
     else if (currentInput.length < 15) {
       setIsBackspace(false);
-      setCurrentInput((prev) => prev + e.key);
+      setCurrentInput((prev) => prev + key);
     }
   }
 

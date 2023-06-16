@@ -26,5 +26,5 @@ export const validInput = [
   'y',
   'z',
   ' ',
-  'Backspace',
+  'backspace',
 ];
