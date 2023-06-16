@@ -16,6 +16,7 @@ const Test = () => {
   const [wpm, setWpm] = useState(0); // Words per minute
   const [numTyped, setNumTyped] = useState(0); // Number of times user has typed a letter
   const [numTypedCorrect, setNumTypedCorrect] = useState(0); // Number of times user has typed a letter correctly
+  const [isBackspace, setIsBackspace] = useState(false); // Keeps pressing backspace from affecting accuracy
   const [accuracy, setAccuracy] = useState(100); // Accuracy
 
   // Initialize test
@@ -102,8 +103,17 @@ const Test = () => {
 
   // On change of current input
   useEffect(() => {
-    calcAccuracy();
+    if (!hasEnded && !isBackspace && currentInput.length) {
+      setNumTyped((prev) => prev + 1);
+      const key = currentInput[currentInput.length - 1];
+      const correctKey = words[input.length][currentInput.length - 1];
+      if (key === correctKey) setNumTypedCorrect((prev) => prev + 1);
+    }
   }, [currentInput]);
+
+  useEffect(() => {
+    calcAccuracy();
+  }, [numTyped]);
 
   // Handle user input
   function handleKeyDown(e) {
@@ -120,6 +130,7 @@ const Test = () => {
 
     // Move onto next word
     if (e.key === ' ') {
+      setIsBackspace(false);
       if (currentInput.length && input.length < words.length) {
         setInput((prev) => {
           const newInput = [...prev, currentInput];
@@ -134,6 +145,7 @@ const Test = () => {
 
     // Handle backspaces
     else if (e.key === 'Backspace') {
+      setIsBackspace(true);
       if (currentInput.length) setCurrentInput((prev) => prev.slice(0, -1));
       else if (input.length && !prevCorrect && !hasEnded) {
         setCurrentInput(input.pop());
@@ -143,9 +155,7 @@ const Test = () => {
 
     // Update input
     else if (currentInput.length < 15) {
-      setNumTyped((prev) => prev + 1);
-      if (!hasEnded && words[input.length][currentInput.length] === e.key)
-        setNumTypedCorrect((prev) => prev + 1);
+      setIsBackspace(false);
       setCurrentInput((prev) => prev + e.key);
     }
   }
