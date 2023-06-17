@@ -16,7 +16,7 @@ const Test = () => {
   const [wpm, setWpm] = useState(0); // Words per minute
   const [numTyped, setNumTyped] = useState(0); // Number of times user has typed a letter
   const [numTypedCorrect, setNumTypedCorrect] = useState(0); // Number of times user has typed a letter correctly
-  const [isBackspace, setIsBackspace] = useState(false); // Keeps pressing backspace from affecting accuracy
+  const [keyPressed, setKeyPressed] = useState(''); // Key user has pressed
   const [accuracy, setAccuracy] = useState(100); // Accuracy
 
   // Initialize test
@@ -29,6 +29,7 @@ const Test = () => {
     setCorrect([]);
     setHasEnded(true);
     setWpm(0);
+    setKeyPressed('');
     setNumTyped(0);
     setNumTypedCorrect(0);
     setAccuracy(100);
@@ -53,7 +54,9 @@ const Test = () => {
   // Log metrics at end of test
   useEffect(() => {
     if (hasEnded && timer && wpm)
-      console.log(`Time: ${timer}\nWPM: ${wpm}\nAccuracy: ${accuracy}`);
+      console.log(
+        `Time: ${timer}\nWPM: ${wpm}\nAccuracy: ${accuracy}\nTest length: ${numWords}\nWords Correct: ${correct.length}`
+      );
   }, [wpm, timer, accuracy]);
 
   // Manage timer
@@ -103,11 +106,10 @@ const Test = () => {
 
   // On change of current input
   useEffect(() => {
-    if (!hasEnded && !isBackspace && currentInput.length) {
+    if (!hasEnded && keyPressed !== 'backspace' && currentInput.length) {
       setNumTyped((prev) => prev + 1);
-      const key = currentInput[currentInput.length - 1];
       const correctKey = words[input.length][currentInput.length - 1];
-      if (key === correctKey) setNumTypedCorrect((prev) => prev + 1);
+      if (keyPressed === correctKey) setNumTypedCorrect((prev) => prev + 1);
     }
   }, [currentInput]);
 
@@ -119,6 +121,7 @@ const Test = () => {
   function handleKeyDown(e) {
     const key = e.key.toLowerCase();
     if (!validInput.includes(key)) return;
+    setKeyPressed(key);
 
     // Start condition
     if (
@@ -131,13 +134,10 @@ const Test = () => {
 
     // Move onto next word
     if (key === ' ') {
-      setIsBackspace(false);
       if (currentInput.length && input.length < words.length) {
         setInput((prev) => {
           const newInput = [...prev, currentInput];
-          setPrevCorrect(
-            newInput[newInput.length - 1] === words[newInput.length - 1]
-          );
+          setPrevCorrect(currentInput === words[newInput.length - 1]);
           return newInput;
         });
         setCurrentInput('');
@@ -146,7 +146,6 @@ const Test = () => {
 
     // Handle backspaces
     else if (key === 'backspace') {
-      setIsBackspace(true);
       if (currentInput.length) setCurrentInput((prev) => prev.slice(0, -1));
       else if (input.length && !prevCorrect && !hasEnded) {
         setCurrentInput(input.pop());
@@ -156,7 +155,6 @@ const Test = () => {
 
     // Update input
     else if (currentInput.length < 15) {
-      setIsBackspace(false);
       setCurrentInput((prev) => prev + key);
     }
   }
