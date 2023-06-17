@@ -3,7 +3,7 @@ import { validInput } from './input';
 import { generate } from 'random-words';
 import './test.css';
 
-const Test = () => {
+const Test = ({ onTestComplete }) => {
   const [numWords, setNumWords] = useState(25); // Test length
   const [words, setWords] = useState(generate(numWords)); // Words for user to type
   const [isFocused, setIsFocused] = useState(false); // Whether input is focused
@@ -53,11 +53,17 @@ const Test = () => {
 
   // Log metrics at end of test
   useEffect(() => {
-    if (hasEnded && timer && wpm)
-      console.log(
-        `Time: ${timer}\nWPM: ${wpm}\nAccuracy: ${accuracy}\nTest length: ${numWords}\nWords Correct: ${correct.length}`
-      );
-  }, [wpm, timer, accuracy]);
+    if (hasEnded && timer) {
+      const testResults = {
+        time: timer,
+        wpm: wpm,
+        accuracy: accuracy,
+        testLength: numWords,
+        wordsCorrect: correct.length,
+      };
+      onTestComplete(testResults);
+    }
+  }, [wpm, timer, accuracy, correct]);
 
   // Manage timer
   useEffect(() => {
@@ -88,15 +94,16 @@ const Test = () => {
 
   // Calculates WPM
   function calcWPM() {
+    if (!correct.length) return;
     const numChars = correct.join().length;
     const _wpm = numChars / 5 / (timer / 60);
-    if (correct.length) setWpm(parseFloat(_wpm.toFixed(2)));
+    setWpm(parseFloat(_wpm.toFixed(2)));
   }
 
   // On change of correct
   useEffect(() => {
     calcWPM();
-  }, [correct]);
+  }, [correct, timer]);
 
   // Calculate accuracy
   function calcAccuracy() {
