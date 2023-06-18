@@ -5,7 +5,7 @@ import { MdLeaderboard, MdOutlineLightMode } from 'react-icons/md';
 
 const Navbar = ({ onClickToggleDark }) => {
   return (
-    <nav className='w-full p-10 text-2xl flex items-center justify-between absolute'>
+    <nav className='w-full p-10 text-2xl flex items-center justify-between'>
       {/* Logo */}
       <h1 className='text-5xl font-bold'>Typing Site</h1>
 

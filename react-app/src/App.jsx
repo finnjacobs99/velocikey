@@ -1,31 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Test, Navbar } from './components/index';
+import { Test, Navbar, Scores } from './components/index';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [testHistory, setTestHistory] = useState([]);
+  const [testResults, setTestResults] = useState([]);
 
   function toggleDarkMode() {
     setDarkMode((prev) => !prev);
   }
 
-  function handleTestResults(results) {
-    setTestHistory((prev) => [...prev, results]);
+  // Gross duisgusting fucking slunt hack
+  function handleTestResults(result) {
+    setTestResults((prev) => [result, ...prev]);
   }
-
-  useEffect(() => {
-    console.log(testHistory);
-  }, [testHistory, handleTestResults]);
 
   return (
     <div className={darkMode ? 'dark' : ''}>
       <div className='flex flex-grow w-full min-h-screen bg-primary dark:bg-primary-dark text-white font-mono transition ease-in-out duration-300'>
         {/* Content Container */}
-        <div className='flex flex-col items-center max-w-screen-2xl mx-auto relative'>
+        <div className='flex flex-col items-center max-w-screen-2xl mx-auto'>
           <Navbar onClickToggleDark={toggleDarkMode} />
-          <div className='my-auto'>
-            <Test onTestComplete={handleTestResults} />
-          </div>
+          {/* <div className='my-auto'> */}
+          <Test onTestComplete={handleTestResults} />
+          {/* </div> */}
+          <Scores userScores={testResults} />
         </div>
       </div>
     </div>

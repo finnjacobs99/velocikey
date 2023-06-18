@@ -18,6 +18,7 @@ const Test = ({ onTestComplete }) => {
   const [numTypedCorrect, setNumTypedCorrect] = useState(0); // Number of times user has typed a letter correctly
   const [keyPressed, setKeyPressed] = useState(''); // Key user has pressed
   const [accuracy, setAccuracy] = useState(100); // Accuracy
+  const [resultArr, setResultArr] = useState([]); // Prevents double entry on late wpm calculation
 
   // Initialize test
   function init(_numWords) {
@@ -34,6 +35,7 @@ const Test = ({ onTestComplete }) => {
     setNumTypedCorrect(0);
     setAccuracy(100);
     setTimer(0);
+    setResultArr([]);
   }
 
   // Set focus of test
@@ -51,9 +53,9 @@ const Test = ({ onTestComplete }) => {
     setHasEnded(true);
   }
 
-  // Log metrics at end of test
+  // Create test results object
   useEffect(() => {
-    if (hasEnded && timer) {
+    if (hasEnded && timer && input.length === words.length) {
       const testResults = {
         time: timer,
         wpm: wpm,
@@ -61,9 +63,20 @@ const Test = ({ onTestComplete }) => {
         testLength: numWords,
         wordsCorrect: correct.length,
       };
-      onTestComplete(testResults);
+      setResultArr((prev) => [...prev, testResults]);
     }
-  }, [wpm, timer, accuracy, correct]);
+  }, [wpm, timer, accuracy, correct, input]);
+
+  // Pass results to parent
+  useEffect(() => {
+    if (hasEnded && timer) {
+      const timeoutID = setTimeout(() => {
+        onTestComplete(resultArr.pop());
+        // console.log(resultArr.pop());
+      }, 100);
+      return () => clearTimeout(timeoutID);
+    }
+  }, [resultArr]);
 
   // Manage timer
   useEffect(() => {
@@ -103,7 +116,7 @@ const Test = ({ onTestComplete }) => {
   // On change of correct
   useEffect(() => {
     calcWPM();
-  }, [correct, timer]);
+  }, [correct, hasEnded]);
 
   // Calculate accuracy
   function calcAccuracy() {
