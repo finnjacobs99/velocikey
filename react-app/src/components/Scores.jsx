@@ -12,11 +12,11 @@ const Scores = ({ userScores }) => {
       <div className='flex flex-col'>
         {scores.map((score, index) => {
           return (
-            <span key={index}>{`Time: ${score.time} WPM: ${score.wpm.toFixed(
+            <span key={index}>{`Time: ${score.time.toFixed(
               2
-            )} Accuracy: ${score.accuracy} Correct: ${score.wordsCorrect}/${
-              score.testLength
-            }`}</span>
+            )} WPM: ${score.wpm.toFixed(2)} Accuracy: ${score.accuracy.toFixed(
+              2
+            )} Correct: ${score.wordsCorrect}/${score.testLength}`}</span>
           );
         })}
       </div>
