@@ -31,7 +31,7 @@ const Navbar = ({ onClickToggleDark }) => {
         </li>
 
         {/* Account */}
-        <li className='flex items-center justify-center ml-5'>
+        <li className='flex items-center justify-center mx-5'>
           <a
             href='/account'
             className='px-1 hover:text-white transition ease-in-out duration-300 cursor-pointer'
@@ -41,7 +41,7 @@ const Navbar = ({ onClickToggleDark }) => {
         </li>
 
         {/* Theme toggle */}
-        <li className='flex items-center justify-center mx-5'>
+        <li className='flex items-center justify-center ml-5'>
           <a
             className='px-1 hover:text-white transition ease-in-out duration-300 cursor-pointer'
             onClick={onClickToggleDark}
