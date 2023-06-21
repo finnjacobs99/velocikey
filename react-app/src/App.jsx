@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Navbar,
   Home,
@@ -11,15 +11,22 @@ import { Routes, Route } from 'react-router-dom';
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
 
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) setDarkMode(storedTheme === 'dark');
+  }, []);
+
   function toggleDarkMode() {
-    setDarkMode((prev) => !prev);
+    const theme = !darkMode;
+    setDarkMode(theme);
+    localStorage.setItem('theme', theme ? 'dark' : '');
   }
 
   return (
     <div className={darkMode ? 'dark' : ''}>
       <div className='flex flex-grow w-full min-h-screen bg-primary dark:bg-primary-dark text-white font-mono transition ease-in-out duration-300'>
         {/* Content Container */}
-        <div className='w-full flex flex-col items-center justify-between max-w-screen-2xl mx-auto'>
+        <div className='w-full hidden sm:flex flex-col items-center justify-between 2xl:px-0 px-10 max-w-screen-2xl mx-auto'>
           <Navbar onClickToggleDark={toggleDarkMode} />
           <Routes>
             <Route path='/' element={<Home />} />
@@ -27,6 +34,11 @@ const App = () => {
             <Route path='/account' element={<Account />} />
           </Routes>
           <Footer />
+        </div>
+
+        {/* Warning for mobile users */}
+        <div className='flex sm:hidden h-screen w-full justify-center items-center px-10'>
+          <span>Sorry! This site does not yet support mobile devices.</span>
         </div>
       </div>
     </div>
