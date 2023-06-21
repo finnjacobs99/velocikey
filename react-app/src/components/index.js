@@ -1,5 +1,7 @@
-import Test from './test/Test';
+import Home from './home/Home';
 import Navbar from './Navbar';
-import Scores from './Scores';
+import Leaderboards from './leaderboards/Leaderboards';
+import Account from './account/Account';
+import Footer from './Footer';
 
-export { Test, Navbar, Scores };
+export { Navbar, Home, Leaderboards, Account, Footer };
