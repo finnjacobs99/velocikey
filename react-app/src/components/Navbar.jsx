@@ -12,15 +12,31 @@ const Navbar = ({ onClickToggleDark }) => {
       <ul className='flex items-center justify-center text-secondary dark:text-secondary-dark'>
         {/* Test */}
         <li className='flex items-center justify-center mx-5'>
-          <a className='px-1 hover:text-white transition ease-in-out duration-300 cursor-pointer'>
+          <a
+            href='/'
+            className='px-1 hover:text-white transition ease-in-out duration-300 cursor-pointer'
+          >
             <BsKeyboard className='w-10 h-10' />
           </a>
         </li>
 
         {/* Leaderboard */}
         <li className='flex items-center justify-center mx-5'>
-          <a className='px-1 hover:text-white transition ease-in-out duration-300 cursor-pointer'>
+          <a
+            href='/leaderboards'
+            className='px-1 hover:text-white transition ease-in-out duration-300 cursor-pointer'
+          >
             <MdLeaderboard className='w-10 h-10' />
+          </a>
+        </li>
+
+        {/* Account */}
+        <li className='flex items-center justify-center ml-5'>
+          <a
+            href='/account'
+            className='px-1 hover:text-white transition ease-in-out duration-300 cursor-pointer'
+          >
+            <RiAccountCircleFill className='w-10 h-10' />
           </a>
         </li>
 
@@ -31,13 +47,6 @@ const Navbar = ({ onClickToggleDark }) => {
             onClick={onClickToggleDark}
           >
             <MdOutlineLightMode className='w-10 h-10' />
-          </a>
-        </li>
-
-        {/* Account */}
-        <li className='flex items-center justify-center ml-5'>
-          <a className='px-1 hover:text-white transition ease-in-out duration-300 cursor-pointer'>
-            <RiAccountCircleFill className='w-10 h-10' />
           </a>
         </li>
       </ul>
