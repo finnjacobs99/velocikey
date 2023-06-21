@@ -10,7 +10,7 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className='flex flex-col items-center justify-around w-full h-full'>
       <Test onTestComplete={handleTestResults} />
       <Scores userScores={testResults} />
     </div>
