@@ -10,9 +10,9 @@ const Home = () => {
   }
 
   return (
-    <div className='flex flex-col items-center justify-around w-full h-full'>
+    <div className='flex flex-col justify-center items-center w-full h-full'>
       <Test onTestComplete={handleTestResults} />
-      <Scores userScores={testResults} />
+      {/* <Scores userScores={testResults} /> */}
     </div>
   );
 };
