@@ -9,17 +9,13 @@ import {
 import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) setDarkMode(storedTheme === 'dark');
-  }, []);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem('theme') === 'dark'
+  );
 
   function toggleDarkMode() {
-    const theme = !darkMode;
-    setDarkMode(theme);
-    localStorage.setItem('theme', theme ? 'dark' : '');
+    localStorage.setItem('theme', darkMode ? '' : 'dark');
+    setDarkMode((prev) => !prev);
   }
 
   return (
