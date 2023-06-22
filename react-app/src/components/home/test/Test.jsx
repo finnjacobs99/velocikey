@@ -266,7 +266,7 @@ const Test = ({ onTestComplete }) => {
       {/* Metrics */}
       <div className='flex justify-center items-center w-full pt-10 text-2xl font-medium'>
         <h1 className='w-1/4 text-center'>
-          Time: {hasEnded && !timer ? '--' : timer.toFixed(2) + ' sec'}
+          Time: {hasEnded && !timer ? '--' : timer.toFixed(2) + 's'}
         </h1>
         <h1 className='w-1/4 text-center'>
           WPM: {hasEnded && !timer ? '--' : wpm.toFixed(2)}
@@ -297,27 +297,27 @@ const Test = ({ onTestComplete }) => {
       </div>
 
       {/* Buttons */}
-      <div className='flex justify-center items-center pb-10 pt-2 text-xl font-semibold text-primary dark:text-primary-dark transition ease-in-out duration-300'>
+      <div className='flex justify-center items-center pb-10 pt-2 text-xl font-semibold'>
         <button
-          className='mx-2 bg-white py-2 px-5 rounded-full'
+          className='mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark transition ease-in-out duration-300'
           onClick={() => init(25)}
         >
           25
         </button>
         <button
-          className='mx-2 bg-white py-2 px-5 rounded-full'
+          className='mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark transition ease-in-out duration-300'
           onClick={() => init(50)}
         >
           50
         </button>
         <button
-          className='mx-2 bg-white py-2 px-5 rounded-full'
+          className='mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark transition ease-in-out duration-300'
           onClick={() => init(100)}
         >
           100
         </button>
         <button
-          className='mx-2 bg-white py-2 px-5 rounded-full'
+          className='mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark transition ease-in-out duration-300'
           onClick={() => init(numWords)}
         >
           Reset
