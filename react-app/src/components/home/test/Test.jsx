@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { validInput } from './input';
 import { generate } from 'random-words';
 import './test.css';
+import { animate } from '../../../styles';
+
+const buttonStyle = `mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark hover:scale-105 ${animate}`;
 
 const Test = ({ onTestComplete }) => {
   const [numWords, setNumWords] = useState(25); // Test length
@@ -279,7 +282,7 @@ const Test = ({ onTestComplete }) => {
       {/* Test */}
       <div className='flex flex-wrap items-center relative p-10 text-2xl outline-none'>
         <div
-          className='absolute inset-1 z-10 flex justify-center items-center outline-none backdrop-blur-md focus:backdrop-blur-none transition ease-in-out duration-300 overflow-hidden'
+          className={`absolute inset-1 z-10 flex justify-center items-center outline-none backdrop-blur-md focus:backdrop-blur-none overflow-hidden ${animate}`}
           onKeyDown={handleKeyDown}
           tabIndex={0}
           onFocus={handleFocus}
@@ -298,28 +301,16 @@ const Test = ({ onTestComplete }) => {
 
       {/* Buttons */}
       <div className='flex justify-center items-center pb-10 pt-2 text-xl font-semibold'>
-        <button
-          className='mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark transition ease-in-out duration-300'
-          onClick={() => init(25)}
-        >
+        <button className={buttonStyle} onClick={() => init(25)}>
           25
         </button>
-        <button
-          className='mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark transition ease-in-out duration-300'
-          onClick={() => init(50)}
-        >
+        <button className={buttonStyle} onClick={() => init(50)}>
           50
         </button>
-        <button
-          className='mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark transition ease-in-out duration-300'
-          onClick={() => init(100)}
-        >
+        <button className={buttonStyle} onClick={() => init(100)}>
           100
         </button>
-        <button
-          className='mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark transition ease-in-out duration-300'
-          onClick={() => init(numWords)}
-        >
+        <button className={buttonStyle} onClick={() => init(numWords)}>
           Reset
         </button>
       </div>
