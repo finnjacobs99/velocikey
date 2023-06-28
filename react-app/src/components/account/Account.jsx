@@ -2,19 +2,27 @@ import React, { useState } from 'react';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import { UserAuth } from '../../contexts/AuthContext';
-import { animate } from '../../styles';
 
 const Account = () => {
-  const [hasAccount, setHasAccount] = useState(false);
+  const [hasAccount, setHasAccount] = useState(
+    localStorage.getItem('hasAccount') === 'true'
+  );
+  const [displayName, setDisplayName] = useState('');
   const { user, logout } = UserAuth();
 
+  function getDisplayName(displayName) {
+    setDisplayName(displayName);
+  }
+
   function toggleForm() {
+    localStorage.setItem('hasAccount', hasAccount ? 'false' : 'true');
     setHasAccount((prev) => !prev);
   }
 
   async function handleLogout() {
     try {
       await logout();
+      setDisplayName('');
       console.log('Logged out');
     } catch (e) {
       console.log(e.message);
@@ -27,7 +35,7 @@ const Account = () => {
         {hasAccount ? (
           <SignIn onClickToggleForm={toggleForm} />
         ) : (
-          <SignUp onClickToggleForm={toggleForm} />
+          <SignUp onCreate={getDisplayName} onClickToggleForm={toggleForm} />
         )}
       </div>
     );
@@ -35,14 +43,16 @@ const Account = () => {
 
   function renderAccount() {
     return (
-      <div className='flex flex-col border'>
-        <span>Logged in as: {user.email}</span>
+      <div className='flex flex-col'>
+        <span>
+          Logged in as: {displayName.length ? displayName : user.displayName}
+        </span>
         <button onClick={handleLogout}>Log Out</button>
       </div>
     );
   }
 
-  return !user ? renderLogin() : renderAccount();
+  return user ? renderAccount() : renderLogin();
 };
 
 export default Account;
