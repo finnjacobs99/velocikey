@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   onAuthStateChanged,
   signOut,
+  updateProfile,
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -14,8 +15,14 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
-  const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const createUser = (email, password, displayName) => {
+    return createUserWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        return updateProfile(userCredential.user, {
+          displayName: displayName,
+        }).finally(() => setUser(userCredential.user));
+      }
+    );
   };
 
   const logout = () => {
@@ -33,7 +40,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
+      // console.log(currentUser);
       setUser(currentUser);
     });
     return () => {
