@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { animate } from '../../styles';
 import { UserAuth } from '../../contexts/AuthContext';
-import { BsGoogle } from 'react-icons/bs';
+import { BsArrowReturnLeft, BsGoogle } from 'react-icons/bs';
+import { BiErrorCircle } from 'react-icons/bi';
 
 const inputStyle = `p-4 mb-6 rounded-lg outline-none bg-white text-black ${animate}`;
 const buttonStyle = `p-4 rounded-lg text-xl font-semibold bg-secondary dark:bg-secondary-dark text-primary dark:text-primary-dark hover:bg-white dark:hover:bg-white ${animate}`;
@@ -15,10 +16,17 @@ const SignIn = ({ onClickToggleForm }) => {
   async function handleSubmit(e) {
     e.preventDefault();
     setError('');
+
+    if (!email.length || !password.length) {
+      setError('All fields must be filled out');
+      return;
+    }
+
     try {
       await signIn(email, password);
     } catch (e) {
-      setError(e.message);
+      if (e.message === 'Firebase: Error (auth/user-not-found).')
+        setError('Invalid email/password');
       console.log(e.message);
     }
   }
@@ -34,16 +42,28 @@ const SignIn = ({ onClickToggleForm }) => {
 
   return (
     <div className='flex flex-col'>
+      {/* Header */}
       <h1 className='text-2xl font-semibold text-white'>Sign In</h1>
-      <p className='py-2 mb-2'>
+      <p className='py-2'>
         Don't have an account?{' '}
         <button onClick={onClickToggleForm} className='underline'>
           Sign up
         </button>
       </p>
+
+      {/* Error Message */}
+      {error.length > 0 && (
+        <span
+          className={`flex items-center pb-2 underline text-error dark:text-error-dark ${animate}`}
+        >
+          <BiErrorCircle className='mr-2' /> {error}
+        </span>
+      )}
+
+      {/* Sign In Form */}
       <form
         onSubmit={handleSubmit}
-        className='flex flex-col text-xl text-primary dark:text-primary-dark'
+        className='flex flex-col mt-1 text-xl text-primary dark:text-primary-dark'
       >
         {/* Email */}
         <input
