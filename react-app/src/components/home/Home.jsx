@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
 import Test from './test/Test';
-import Scores from './Scores';
+import { UserAuth } from '../../contexts/AuthContext';
+import { db } from '../../firebase';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 
 const Home = () => {
-  const [testResults, setTestResults] = useState([]);
+  const { user } = UserAuth();
 
-  function handleTestResults(result) {
-    setTestResults((prev) => [result, ...prev]);
+  async function handleTestResults(result) {
+    if (!user) return;
+
+    const testResultsRef = collection(db, 'users', user.uid, 'testResults');
+
+    await addDoc(testResultsRef, {
+      time: result.time,
+      wpm: result.wpm,
+      accuracy: result.accuracy,
+      testLength: result.testLength,
+      wordsCorrect: result.wordsCorrect,
+    });
   }
 
   return (
     <div className='flex flex-col justify-center items-center w-full h-full'>
       <Test onTestComplete={handleTestResults} />
-      {/* <Scores userScores={testResults} /> */}
     </div>
   );
 };
