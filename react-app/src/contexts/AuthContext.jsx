@@ -8,7 +8,8 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
+import { addDoc, collection, getDoc, setDoc, doc } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
@@ -18,9 +19,17 @@ export const AuthContextProvider = ({ children }) => {
   const createUser = (email, password, displayName) => {
     return createUserWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
-        return updateProfile(userCredential.user, {
+        const user = userCredential.user;
+        const { uid } = user;
+
+        return updateProfile(user, {
           displayName: displayName,
-        }).finally(() => setUser(userCredential.user));
+        })
+          .then(() => {
+            const userDocRef = doc(db, 'users', uid);
+            return setDoc(userDocRef, { displayName });
+          })
+          .then(() => setUser(user));
       }
     );
   };
@@ -35,12 +44,23 @@ export const AuthContextProvider = ({ children }) => {
 
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
+    signInWithPopup(auth, provider).then((result) => {
+      const user = result.user;
+      const { uid, displayName } = user;
+
+      const userDocRef = doc(db, 'users', uid);
+      return getDoc(userDocRef).then((docSnapshot) => {
+        if (docSnapshot.exists()) setUser(user);
+        else {
+          return setDoc(userDocRef, { displayName }).then(() => setUser(user));
+        }
+      });
+    });
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // console.log(currentUser);
+      console.log(currentUser);
       setUser(currentUser);
     });
     return () => {
