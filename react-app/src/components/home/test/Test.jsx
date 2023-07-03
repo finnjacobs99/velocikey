@@ -4,7 +4,7 @@ import { generate } from 'random-words';
 import './test.css';
 import { animate } from '../../../styles';
 
-const buttonStyle = `mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark hover:scale-105 ${animate}`;
+const buttonStyle = `mx-2 py-2 px-5 rounded-full bg-secondary dark:bg-secondary-dark hover:bg-white dark:hover:bg-white text-primary dark:text-primary-dark hover:scale-110 ${animate}`;
 
 const Test = ({ onTestComplete }) => {
   const [numWords, setNumWords] = useState(25); // Test length
@@ -65,6 +65,8 @@ const Test = ({ onTestComplete }) => {
         accuracy: accuracy,
         testLength: numWords,
         wordsCorrect: correct.length,
+        numTyped: numTyped,
+        numTypedCorrect: numTypedCorrect,
       };
       setResultArr((prev) => [...prev, testResults]);
     }
