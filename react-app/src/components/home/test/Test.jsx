@@ -77,7 +77,6 @@ const Test = ({ onTestComplete }) => {
     if (hasEnded && timer) {
       const timeoutID = setTimeout(() => {
         onTestComplete(resultArr.pop());
-        // console.log(resultArr.pop());
       }, 100);
       return () => clearTimeout(timeoutID);
     }
