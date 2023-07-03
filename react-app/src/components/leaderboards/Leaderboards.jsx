@@ -1,7 +1,19 @@
 import React from 'react';
+import UserScores from './UserScores';
+import { UserAuth } from '../../contexts/AuthContext';
 
 const Leaderboards = () => {
-  return <div>Leaderboards</div>;
+  const { user } = UserAuth();
+
+  // 10 previous tests || personal best
+  //          Leaderboard
+
+  return (
+    <div className='flex flex-col justify-center items-center w-full'>
+      {user ? <UserScores /> : <div>Sign in to track your scores</div>}
+      <div>Leaderboard</div>
+    </div>
+  );
 };
 
 export default Leaderboards;
