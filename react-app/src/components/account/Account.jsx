@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
+import { animate } from '../../styles';
 import { UserAuth } from '../../contexts/AuthContext';
 
 const Account = () => {
@@ -41,13 +42,27 @@ const Account = () => {
     );
   }
 
+  // Signed in as:
+  // Email:
+
   function renderAccount() {
     return (
-      <div className='flex flex-col'>
-        <span>
-          Logged in as: {displayName.length ? displayName : user.displayName}
-        </span>
-        <button onClick={handleLogout}>Log Out</button>
+      <div className='flex flex-col justify-center items-center w-full'>
+        {/* Account Info container */}
+        <div className='flex flex-col text-2xl mb-10'>
+          <span className='mb-2'>
+            Signed in as: {displayName.length ? displayName : user.displayName}
+          </span>
+          <span>Email: {user.email}</span>
+        </div>
+
+        {/* Sign Out Button */}
+        <button
+          onClick={handleLogout}
+          className={`py-4 px-10 text-xl font-semibold rounded-lg bg-secondary dark:bg-secondary-dark text-primary dark:text-primary-dark hover:bg-white dark:hover:bg-white ${animate}`}
+        >
+          Sign Out
+        </button>
       </div>
     );
   }
