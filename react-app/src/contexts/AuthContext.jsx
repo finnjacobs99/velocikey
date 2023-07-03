@@ -9,7 +9,7 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { auth, db } from '../firebase';
-import { addDoc, collection, getDoc, setDoc, doc } from 'firebase/firestore';
+import { getDoc, setDoc, doc } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
