@@ -8,6 +8,7 @@ import {
 } from './components/index';
 import { Routes, Route } from 'react-router-dom';
 import { AuthContextProvider } from './contexts/AuthContext';
+import { TestResultsProvider } from './contexts/TestResultsContext';
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(
@@ -28,7 +29,14 @@ const App = () => {
             <Navbar onClickToggleDark={toggleDarkMode} />
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/leaderboards' element={<Leaderboards />} />
+              <Route
+                path='/leaderboards'
+                element={
+                  <TestResultsProvider>
+                    <Leaderboards />
+                  </TestResultsProvider>
+                }
+              />
               <Route path='/account' element={<Account />} />
             </Routes>
             <Footer />
