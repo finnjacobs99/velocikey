@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Test from './test/Test';
 import { UserAuth } from '../../contexts/AuthContext';
 import { db } from '../../firebase';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 
 const Home = () => {
   const { user } = UserAuth();
@@ -18,6 +18,7 @@ const Home = () => {
       accuracy: result.accuracy,
       testLength: result.testLength,
       wordsCorrect: result.wordsCorrect,
+      timestamp: new Date(),
     });
   }
 
