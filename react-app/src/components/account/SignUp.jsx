@@ -30,6 +30,11 @@ const SignUp = ({ onCreate, onClickToggleForm }) => {
       return;
     }
 
+    if (username.length > 12 || username.length < 4) {
+      setError('Username must be between 4 and 12 characters');
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
