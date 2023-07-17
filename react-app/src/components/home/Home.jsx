@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Test from './test/Test';
 import { UserAuth } from '../../contexts/AuthContext';
 import { db } from '../../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, getDoc, setDoc } from 'firebase/firestore';
 
 const Home = () => {
   const { user } = UserAuth();
@@ -11,6 +11,23 @@ const Home = () => {
     if (!user) return;
 
     const testResultsRef = collection(db, 'users', user.uid, 'testResults');
+    const docRef = doc(db, 'users', user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      if (!docSnap.data().bestWpm || result.wpm > docSnap.data().bestWpm)
+        setDoc(
+          docRef,
+          {
+            bestTime: result.time,
+            bestWpm: result.wpm,
+            bestAccuracy: result.accuracy,
+            bestTestLength: result.testLength,
+            bestWordsCorrect: result.wordsCorrect,
+          },
+          { merge: true }
+        );
+    }
 
     await addDoc(testResultsRef, {
       time: result.time,
