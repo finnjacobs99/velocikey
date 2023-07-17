@@ -39,6 +39,7 @@ const UserScores = () => {
 
   return (
     <div className='flex flex-col justify-center items-center w-full p-10'>
+      <div className='pb-10 text-2xl'>Your Recent Results:</div>
       {/* Labels */}
       <div className='flex text-2xl w-full text-center'>
         <span className='w-1/4'>Time</span>

@@ -10,8 +10,13 @@ const Leaderboards = () => {
 
   return (
     <div className='flex flex-col justify-center items-center w-full'>
-      <h1 className='text-2xl'>Your Test Results:</h1>
-      {user ? <UserScores /> : <div>Sign in to track your scores</div>}
+      {user ? (
+        <UserScores />
+      ) : (
+        <div className='py-10 text-2xl'>
+          Sign in to track/view your results!
+        </div>
+      )}
       {/* <div>Leaderboard</div> */}
     </div>
   );
