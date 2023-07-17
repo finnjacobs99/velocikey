@@ -65,8 +65,6 @@ const Test = ({ onTestComplete }) => {
         accuracy: accuracy,
         testLength: numWords,
         wordsCorrect: correct.length,
-        numTyped: numTyped,
-        numTypedCorrect: numTypedCorrect,
       };
       setResultArr((prev) => [...prev, testResults]);
     }
