@@ -1,47 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { animate } from '../../styles';
-// import { UserAuth } from '../../contexts/AuthContext';
-// import { db } from '../../firebase';
-// import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import { useTestResults } from '../../contexts/TestResultsContext';
 
 const UserScores = () => {
-  const testResults = useTestResults();
-
-  // const [testResults, setTestResults] = useState([]);
-  // const { user } = UserAuth();
-
-  // useEffect(() => {
-  //   const fetchTestResults = async () => {
-  //     if (!user) return;
-
-  //     const q = query(
-  //       collection(db, 'users', user.uid, 'testResults'),
-  //       orderBy('timestamp', 'desc'),
-  //       limit(10)
-  //     );
-  //     const querySnapshot = await getDocs(q);
-
-  //     const results = [];
-  //     querySnapshot.forEach((doc) => {
-  //       results.push(doc.data());
-  //     });
-
-  //     setTestResults(results);
-  //   };
-
-  //   fetchTestResults();
-  // }, [user]);
-
-  // useEffect(() => {
-  //   console.log(testResults);
-  // }, [testResults]);
+  const { testResults, personalBest } = useTestResults();
 
   return (
     <div className='flex flex-col justify-center items-center w-full p-10'>
-      <div className='pb-10 text-2xl'>Your Recent Results:</div>
+      {/* Personal Best */}
+      {!personalBest ? null : (
+        <div className='flex flex-col w-full items-center justify-center'>
+          <div className='text-2xl pb-10'>Personal Best:</div>
+          <div className='flex items-center justify-center w-full pb-10 text-xl text-center'>
+            <span className='w-1/4'>{`Time: ${personalBest.time}`}</span>
+            <span className='w-1/4'>{`WPM: ${personalBest.wpm}`}</span>
+            <span className='w-1/4'>{`Accuracy: ${personalBest.accuracy} %`}</span>
+            <span className='w-1/4'>{`Correct: ${personalBest.wordsCorrect}/${personalBest.testLength}`}</span>
+          </div>
+        </div>
+      )}
+
+      <div className='py-10 mt-10 text-2xl'>Recent Results:</div>
       {/* Labels */}
-      <div className='flex text-2xl w-full text-center'>
+      <div className='flex text-xl w-full text-center'>
         <span className='w-1/4'>Time</span>
         <span className='w-1/4'>WPM</span>
         <span className='w-1/4'>Accuracy</span>
@@ -55,7 +36,7 @@ const UserScores = () => {
 
       {/* Scores */}
       {testResults.map((result, idx) => (
-        <div key={idx} className='flex text-2xl text-center w-full mb-5'>
+        <div key={idx} className='flex text-xl text-center w-full mb-5'>
           <span className='w-1/4'>{`${result.time.toFixed(2)}s`}</span>
           <span className='w-1/4'>{result.wpm.toFixed(2)}</span>
           <span className='w-1/4'>{`${result.accuracy.toFixed(2)} %`}</span>
