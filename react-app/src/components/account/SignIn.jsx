@@ -47,7 +47,7 @@ const SignIn = ({ onClickToggleForm }) => {
       <p className='py-2'>
         Don't have an account?{' '}
         <button onClick={onClickToggleForm} className='underline'>
-          Sign up
+          Sign Up
         </button>
       </p>
 
