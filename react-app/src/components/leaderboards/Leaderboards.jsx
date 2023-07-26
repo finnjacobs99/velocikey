@@ -10,7 +10,7 @@ const Leaderboards = () => {
 
   return (
     // Personal best / results
-    <div className='flex flex-col justify-center items-center w-full'>
+    <div className='flex flex-col justify-center items-center w-full p-10'>
       {user ? (
         <UserScores />
       ) : (
@@ -23,18 +23,40 @@ const Leaderboards = () => {
       )}
 
       {/* Leaderboard */}
-      <div className='flex flex-col justify-center items-center w-full p-10 mt-10'>
-        <h1 className='text-2xl pb-5'>Leaderboard</h1>
+      <div
+        className={`flex flex-col justify-center items-center w-full p-10 mt-10 rounded-2xl bg-white/50 text-primary dark:text-primary-dark ${animate} font-bold`}
+      >
+        {/* Title */}
+        <h1 className='text-2xl lg:text-3xl mt-0 lg:mt-5 mb-10'>Leaderboard</h1>
+
+        {/* Labels */}
+
+        <div className='flex text-lg lg:text-xl w-full text-center'>
+          <span className='w-1/6'>Rank:</span>
+          <span className='w-1/6'>Username:</span>
+          <span className='w-1/6'>Time:</span>
+          <span className='w-1/6'>WPM:</span>
+          <span className='w-1/6'>Accuracy:</span>
+          <span className='w-1/6'>Correct:</span>
+        </div>
+
+        {/* Divider */}
         <div
-          className={`w-full my-5 h-1 rounded-full bg-secondary dark:bg-secondary-dark ${animate}`}
+          className={`w-full my-5 h-1 rounded-full bg-primary dark:bg-primary-dark ${animate}`}
         />
+
+        {/* Scores */}
         {leaderboard.map((result, idx) => (
-          <div key={idx} className='flex w-full text-center mb-5 text-xl'>
-            <span className='w-1/5 text-left pl-28'>{`${result.displayName}`}</span>
-            <span className='w-1/5 text-left pl-28'>{`${result.bestTime}s`}</span>
-            <span className='w-1/5'>{`${result.bestWpm}`}</span>
-            <span className='w-1/5 text-right pr-28'>{`${result.bestAccuracy} %`}</span>
-            <span className='w-1/5 text-right pr-28'>{`${result.bestWordsCorrect}/${result.bestTestLength}`}</span>
+          <div
+            key={idx}
+            className='flex w-full text-center mb-5 text-lg lg:text-xl'
+          >
+            <span className='w-1/6'>{`${idx + 1}`}</span>
+            <span className='w-1/6'>{`${result.displayName}`}</span>
+            <span className='w-1/6'>{`${result.bestTime}s`}</span>
+            <span className='w-1/6'>{`${result.bestWpm}`}</span>
+            <span className='w-1/6'>{`${result.bestAccuracy} %`}</span>
+            <span className='w-1/6'>{`${result.bestWordsCorrect}/${result.bestTestLength}`}</span>
           </div>
         ))}
       </div>
