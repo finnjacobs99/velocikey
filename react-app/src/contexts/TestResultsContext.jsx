@@ -26,7 +26,7 @@ const TestResultsProvider = ({ children }) => {
       const q = query(
         collection(db, 'users', user.uid, 'testResults'),
         orderBy('timestamp', 'desc'),
-        limit(10)
+        limit(5)
       );
       const querySnapshot = await getDocs(q);
 
@@ -43,7 +43,7 @@ const TestResultsProvider = ({ children }) => {
       const docRef = doc(db, 'users', user.uid);
       const docSnap = await getDoc(docRef);
 
-      if (docSnap.data().bestWpm) {
+      if (docSnap.data().bestWpm !== undefined) {
         const pb = {
           time: docSnap.data().bestTime,
           wpm: docSnap.data().bestWpm,
