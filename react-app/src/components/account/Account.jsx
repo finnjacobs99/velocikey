@@ -42,9 +42,6 @@ const Account = () => {
     );
   }
 
-  // Signed in as:
-  // Email:
-
   function renderAccount() {
     return (
       <div className='flex flex-col justify-center items-center w-full'>
