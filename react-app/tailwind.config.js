@@ -25,6 +25,11 @@ export default {
         secondary: '#AEAC9A',
         error: '#FFC6A3',
 
+        // New Theme
+        // primary: '#8fb3ff',
+        // secondary: '#ebf1ff',
+        // error: '#d41d6d',
+
         // Dark theme
         'primary-dark': '#262626',
         'secondary-dark': '#737373',
