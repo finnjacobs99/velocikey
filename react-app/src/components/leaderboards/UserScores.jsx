@@ -20,7 +20,7 @@ const UserScores = () => {
 
           {/* Values */}
           <div className='flex flex-col w-full justify-center items-center text-lg lg:text-xl h-full'>
-            <span className='mb-2'>{`Time: ${personalBest.time}`}</span>
+            <span className='mb-2'>{`Time: ${personalBest.time}s`}</span>
             <span className='mb-2'>{`WPM: ${personalBest.wpm}`}</span>
             <span className='mb-2'>{`Accuracy: ${personalBest.accuracy} %`}</span>
             <span>{`Correct: ${personalBest.wordsCorrect}/${personalBest.testLength}`}</span>
