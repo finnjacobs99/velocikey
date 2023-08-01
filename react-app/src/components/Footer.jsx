@@ -11,7 +11,7 @@ const Footer = () => {
       <ul className='flex'>
         <li className={`mr-5 ${linkStyle}`}>
           <a
-            href='https://github.com/finnjacobs99'
+            href='https://finnjacobs.vercel.app/'
             target='_blank'
             className='flex items-center justify-center'
           >
