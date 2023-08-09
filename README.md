@@ -27,7 +27,7 @@ npm install npm@latest -g
 git clone https://github.com/finnjacobs99/velocikey.git
 ```
 
-3. Install npm packages
+2. Install project dependencies
 ```
 npm install
 ```
