@@ -37,7 +37,7 @@ npm install
 ### Firebase Setup
 This app uses Firebase as a backend, so you will have to follow these steps for it to work properly
 
-1. Navigate to https://console.firebase.google.com/ and create an account/sign in
+1. Navigate to [Firebase.com](https://firebase.google.com/) and create an account/sign in
 2. Create a new Firebase project and register a new web app
 3. When presented with your Firebase config, create a .env.local file in the root directory and paste the following code with your config values
 ```
