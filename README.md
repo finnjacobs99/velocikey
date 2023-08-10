@@ -4,6 +4,8 @@
 ## Description
 Velocikey is an online typing test platform designed to measure your typing speed and accuracy. Complete tests to see your words-per-minute (WPM) and typing accuracy in real time, or create an account to track your results and compete with others on the global leaderboard.
 
+[Website Link](https://velocikey.vercel.app)
+
 ### Built With
 - React
 - HTML
