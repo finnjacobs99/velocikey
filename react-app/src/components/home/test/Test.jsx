@@ -281,7 +281,9 @@ const Test = ({ onTestComplete }) => {
       {/* Test */}
       <div className='flex flex-wrap items-center relative p-10 text-2xl outline-none'>
         <div
-          className={`absolute inset-1 z-10 flex justify-center items-center outline-none backdrop-blur-md focus:backdrop-blur-none overflow-hidden focus:cursor-default cursor-pointer ${animate}`}
+          className={` ${
+            isFocused && `opacity-0`
+          } transition-opacity ease-in-out duration-300 absolute inset-1 z-10 flex justify-center items-center outline-none backdrop-blur-md overflow-hidden focus:cursor-default cursor-pointer`}
           onKeyDown={handleKeyDown}
           tabIndex={0}
           onFocus={handleFocus}
